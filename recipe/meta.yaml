@@ -17,17 +17,21 @@ build:
     script: python setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
-    build:
+    host:
         - python
         - setuptools
         - cython
-        - numpy x.x
+        - numpy
         - scipy
         - pandas
         - patsy
+
+    build:
+        - {{ compiler('c') }}
+
     run:
         - python
-        - numpy x.x
+        - {{ pin_compatible('numpy') }}
         - scipy
         - pandas
         - patsy
