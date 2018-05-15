@@ -32,9 +32,9 @@ requirements:
     run:
         - python
         - {{ pin_compatible('numpy') }}
-        - scipy
-        - pandas
-        - patsy
+        - scipy >=0.14
+        - pandas >=0.14
+        - patsy >=0.4.0
 test:
     imports:
         - statsmodels
