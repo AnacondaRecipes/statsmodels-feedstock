@@ -38,9 +38,19 @@ test:
 about:
   home: https://www.statsmodels.org
   license: BSD 3-Clause
+  license_file: LICENSE.txt
+  license_family: BSD
   summary: 'Statistical computations and models for use with SciPy'
   dev_url: https://github.com/statsmodels/statsmodels
   doc_url: https://www.statsmodels.org/stable/
+  description: |
+    Statsmodels is a Python module that allows users to explore data, estimate
+    statistical models, and perform statistical tests. An extensive list of
+    descriptive statistics, statistical tests, plotting functions, and result
+    statistics are available for different types of data and each estimator.
+    Researchers across fields may find that statsmodels fully meets their
+    needs for statistical computing and data analysis in Python.
+  doc_source_url: https://github.com/statsmodels/statsmodels/blob/master/docs/source/index.rst
 
 extra:
   recipe-maintainers:
