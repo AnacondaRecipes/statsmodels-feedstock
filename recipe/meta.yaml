@@ -10,8 +10,13 @@ source:
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"                # [not win]
-  script: python setup.py install --single-version-externally-managed --record record.txt  # [win]
+  script:
+    - "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"                # [not win]
+    - "rm -f ${PREFIX}/LICENSE.txt"                                                    # [not win]
+    - "rm -f ${PREFIX}/setup.cfg"                                                      # [not win]
+    - python setup.py install --single-version-externally-managed --record record.txt  # [win]
+    - "del /f /q %PREFIX%\LICENSE.txt"                                                 # [win]
+    - "del /f /q %PREFIX%\setup.cfg"                                                   # [win]
 
 requirements:
   build:
