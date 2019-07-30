@@ -15,8 +15,8 @@ build:
     - "rm -f ${PREFIX}/LICENSE.txt"                                                    # [not win]
     - "rm -f ${PREFIX}/setup.cfg"                                                      # [not win]
     - python setup.py install --single-version-externally-managed --record record.txt  # [win]
-    - "del /f /q %PREFIX%\LICENSE.txt"                                                 # [win]
-    - "del /f /q %PREFIX%\setup.cfg"                                                   # [win]
+    - "del /f /q %PREFIX%\\LICENSE.txt"                                                 # [win]
+    - "del /f /q %PREFIX%\\setup.cfg"                                                   # [win]
 
 requirements:
   build:
