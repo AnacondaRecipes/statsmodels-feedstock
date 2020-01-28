@@ -26,7 +26,7 @@ requirements:
     - python
     - pip
     - cython
-    - numpy
+    - numpy 1.14
     - scipy >=1.0
     - pandas >=0.21
     - patsy >=0.5.1
