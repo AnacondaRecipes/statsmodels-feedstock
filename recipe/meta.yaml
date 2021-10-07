@@ -26,7 +26,7 @@ requirements:
     - python
     - pip
     - cython >=0.29.22
-    # Do not add any constraint on numpy here to use global pinning from cbc.yml
+    # Do not add any constraint on numpy here to use global pinning from cbc.yml on aggregate repo
     - numpy
     - scipy >=1.3
     - setuptools
