@@ -10,7 +10,6 @@ source:
 
 build:
   number: 0
-  # statsmodels >=0.13.0 requires python >=3.7
   skip: true  # [py<37] 
   script:
     - "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"                # [not win]
@@ -51,7 +50,7 @@ about:
   license: BSD-3-Clause
   license_file: INSTALL.txt
   license_family: BSD
-  summary: 'Statistical computations and models for use with SciPy'
+  summary: Statistical computations and models for use with SciPy
   dev_url: https://github.com/statsmodels/statsmodels
   doc_url: https://www.statsmodels.org/stable/
   description: |
