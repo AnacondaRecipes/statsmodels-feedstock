@@ -21,9 +21,11 @@ requirements:
     - python
     - pip
     - numpy
+    - scipy
     - cython >=0.29.32
     - setuptools
     - setuptools_scm >=7.0,<8
+    - toml
     - wheel
   run:
     - python
