@@ -10,7 +10,7 @@ source:
   sha256: 593526acae1c0fda0ea6c48439f67c3943094c542fe769f8b90fe9e6c6cc4871
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<37] 
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
@@ -20,7 +20,9 @@ requirements:
   host:
     - python
     - pip
-    - numpy
+    # scipy needs 1.23 on python 3.11
+    - numpy 1.23         # [py==311]
+    - numpy {{ numpy }}  # [py!=311]
     - scipy
     - cython >=0.29.32
     - setuptools
