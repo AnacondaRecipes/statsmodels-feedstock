@@ -23,7 +23,7 @@ requirements:
     - pip
     - scipy 1.10.1
     - setuptools
-    - setuptools_scm 7.0.4
+    - setuptools_scm >=7.0,<8
     - toml
     - wheel
   run:
