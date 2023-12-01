@@ -21,7 +21,8 @@ requirements:
     - cython >=0.29.26,<3
     - numpy {{ numpy }}
     - pip
-    - scipy 1.10.1
+    - scipy 1.10.1 # [py!=312]
+    - scipy 1.11.3 # [py==312]
     - setuptools
     - setuptools_scm >=7.0,<8
     - toml
