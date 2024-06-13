@@ -20,10 +20,9 @@ requirements:
   host:
     - python
     - cython >=3.0.10,<4
-    - numpy {{ numpy }}
+    - numpy >=1.23
     - pip
-    - scipy 1.10.1 # [py!=312]
-    - scipy 1.11.3 # [py==312]
+    - scipy >=1.13,<2
     - setuptools
     - setuptools_scm >=8.0,<9
     - toml
