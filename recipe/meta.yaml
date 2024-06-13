@@ -19,22 +19,23 @@ requirements:
     - {{ compiler('c') }}
   host:
     - python
-    - cython >=0.29.26,<3
+    - cython >=3.0.10,<4
     - numpy {{ numpy }}
     - pip
-    - scipy 1.10.1 # [py!=312]
-    - scipy 1.11.3 # [py==312]
+    - scipy>=1.13,<2
+    # - scipy 1.10.1 # [py!=312]
+    # - scipy 1.11.3 # [py==312]
     - setuptools
-    - setuptools_scm >=7.0,<8
+    - setuptools_scm >=8.0,<9
     - toml
     - wheel
   run:
     - python
     - {{ pin_compatible('numpy') }}
     - packaging >=21.3
-    - pandas >=1.0
-    - patsy >=0.5.2
-    - scipy >=1.4,!=1.9.2
+    - pandas >=1.4,!=2.1.0
+    - patsy >=0.5.6
+    - scipy >=1.8,!=1.9.2
 
 test:
   imports:
