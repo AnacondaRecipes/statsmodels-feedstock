@@ -21,7 +21,7 @@ requirements:
     - python
     - cython >=3.0.10,<4
     - numpy 1.23  # [py<311]
-    - numpy {{ numpy }}
+    - numpy {{ numpy }}  # [py>=311]
     - pip
     - scipy >=1.13,<2
     - setuptools
