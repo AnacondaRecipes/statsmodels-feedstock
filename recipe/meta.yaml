@@ -1,5 +1,5 @@
 {% set name = "statsmodels" %}
-{% set version = "0.14.5" %}
+{% set version = "0.14.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: de260e58cccfd2ceddf835b55a357233d6ca853a1aa4f90f7553a52cc71c6ddf
+  sha256: 4d17873d3e607d398b85126cd4ed7aad89e4e9d89fc744cdab1af3189a996c2a
 
 build:
   skip: true  # [py<39]
@@ -25,13 +25,16 @@ requirements:
     - scipy >=1.13,<2
     - setuptools >=69.0.2
     - setuptools_scm >=8.0,<9
+    - numpy >=2.0.0,<3
+    - setuptools-scm >=8,<9
+    - packaging
   run:
     - python
-    - numpy  >=1.22.3,<3
+    - numpy <3,>=1.22.3
     - packaging >=21.3
-    - pandas >=1.4,!=2.1.0
+    - pandas !=2.1.0,>=1.4
     - patsy >=0.5.6
-    - scipy >=1.8,!=1.9.2
+    - scipy !=1.9.2,>=1.8
 
 test:
   imports:
@@ -56,6 +59,8 @@ about:
     statistics are available for different types of data and each estimator.
     Researchers across fields may find that statsmodels fully meets their
     needs for statistical computing and data analysis in Python.
+
+
 
 extra:
   recipe-maintainers:
