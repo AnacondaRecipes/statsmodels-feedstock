@@ -13,36 +13,48 @@ build:
   skip: true  # [py<39]
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-
+  ignore_run_exports:
+    - numpy
 requirements:
   build:
+    # - {{ stdlib('c') }}
     - {{ compiler('c') }}
   host:
     - python
-    - cython >=3.0.10,<4
-    - numpy {{ numpy }}
     - pip
-    - scipy >=1.13,<2
     - setuptools >=69.0.2
-    - setuptools_scm >=8.0,<9
+    - cython >=3.0.10,<4
     - numpy >=2.0.0,<3
-    - setuptools-scm >=8,<9
-    - packaging
+    - scipy >=1.13,<2
+    - setuptools_scm >=8.0,<9
+    - toml
   run:
     - python
-    - numpy <3,>=1.22.3
-    - packaging >=21.3
-    - pandas !=2.1.0,>=1.4
+    - numpy >=1.22.3,<3
+    - scipy >=1.8,!=1.9.2
+    - pandas >=1.4,!=2.1.0
     - patsy >=0.5.6
-    - scipy !=1.9.2,>=1.8
+    - packaging >=21.3
+
+# E fixture 'reset_randomstate' not found
+{% set deselect_tests = "--deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLM::test_zero_collinear" %}
+{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLMPoissonOffset::test_zero_collinear" %}
+# E Failed: DID NOT WARN. No warnings of type (<class 'statsmodels.tools.sm_exceptions.HessianInversionWarning'>,) were emitted.
+{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output_false" %}
+{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output" %}
 
 test:
+  source_files:
+    - statsmodels/base/tests
   imports:
     - statsmodels
   requires:
     - pip
+    - pytest >=7.3.0,<8
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest --pyargs {{ deselect_tests }}
 
 about:
   home: https://www.statsmodels.org
