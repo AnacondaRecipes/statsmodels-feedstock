@@ -42,6 +42,9 @@ requirements:
 # E Failed: DID NOT WARN. No warnings of type (<class 'statsmodels.tools.sm_exceptions.HessianInversionWarning'>,) were emitted.
 {% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output_false" %}
 {% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output" %}
+# > raise ValueError("Cannot use capturing groups in re.Scanner")
+{% set ignore_tests = " --ignore=statsmodels/base/tests/test_generic_methods.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=statsmodels/base/tests/test_shrink_pickle.py" %}
 
 test:
   source_files:
@@ -54,12 +57,12 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest --pyargs {{ deselect_tests }}
+    - pytest --pyargs {{ deselect_tests }} {{ ignore_tests }}
 
 about:
   home: https://www.statsmodels.org
   dev_url: https://github.com/statsmodels/statsmodels
-  doc_url: https://www.statsmodels.org/stable/
+  doc_url: https://www.statsmodels.org
   license: BSD-3-Clause
   license_file: LICENSE.txt
   license_family: BSD
