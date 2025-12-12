@@ -1,5 +1,5 @@
 {% set name = "statsmodels" %}
-{% set version = "0.14.5" %}
+{% set version = "0.14.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: de260e58cccfd2ceddf835b55a357233d6ca853a1aa4f90f7553a52cc71c6ddf
+  sha256: 4d17873d3e607d398b85126cd4ed7aad89e4e9d89fc744cdab1af3189a996c2a
 
 build:
   skip: true  # [py<39]
@@ -16,35 +16,52 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
   host:
     - python
-    - cython >=3.0.10,<4
-    - numpy {{ numpy }}
     - pip
-    - scipy >=1.13,<2
     - setuptools >=69.0.2
+    - cython >=3.0.10,<4
+    - numpy >=2.0.0,<3
+    - scipy >=1.13,<2
     - setuptools_scm >=8.0,<9
+    - toml
   run:
     - python
-    - numpy  >=1.22.3,<3
-    - packaging >=21.3
+    - numpy >=1.22.3,<3
+    - scipy >=1.8,!=1.9.2
     - pandas >=1.4,!=2.1.0
     - patsy >=0.5.6
-    - scipy >=1.8,!=1.9.2
+    - packaging >=21.3
+
+# E fixture 'reset_randomstate' not found
+{% set deselect_tests = "--deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLM::test_zero_collinear" %}
+{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLMPoissonOffset::test_zero_collinear" %}
+# E Failed: DID NOT WARN. No warnings of type (<class 'statsmodels.tools.sm_exceptions.HessianInversionWarning'>,) were emitted.
+{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output_false" %}
+{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output" %}
+# > raise ValueError("Cannot use capturing groups in re.Scanner")
+{% set ignore_tests = " --ignore=statsmodels/base/tests/test_generic_methods.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=statsmodels/base/tests/test_shrink_pickle.py" %}
 
 test:
+  source_files:
+    - statsmodels/base/tests
   imports:
     - statsmodels
   requires:
     - pip
+    - pytest >=7.3.0,<8
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest --pyargs {{ deselect_tests }} {{ ignore_tests }}
 
 about:
   home: https://www.statsmodels.org
   dev_url: https://github.com/statsmodels/statsmodels
-  doc_url: https://www.statsmodels.org/stable/
+  doc_url: https://www.statsmodels.org
   license: BSD-3-Clause
   license_file: LICENSE.txt
   license_family: BSD
@@ -56,6 +73,8 @@ about:
     statistics are available for different types of data and each estimator.
     Researchers across fields may find that statsmodels fully meets their
     needs for statistical computing and data analysis in Python.
+
+
 
 extra:
   recipe-maintainers:
