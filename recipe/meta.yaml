@@ -13,8 +13,7 @@ build:
   skip: true  # [py<39]
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  ignore_run_exports:
-    - numpy
+
 requirements:
   build:
     - {{ stdlib('c') }}
