@@ -1,16 +1,25 @@
 {% set name = "statsmodels" %}
-{% set version = "0.14.6" %}
+{% set version = "0.15.0" %}
+{% set deselect_tests = "--deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLM::test_zero_collinear" %}
+{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLMPoissonOffset::test_zero_collinear"' %}
+{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output_false"' %}
+{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output"' %}
+{% set ignore_tests = " --ignore=statsmodels/base/tests/test_generic_methods.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=statsmodels/base/tests/test_shrink_pickle.py" %}
 
+# E fixture 'reset_randomstate' not found
+# E Failed: DID NOT WARN. No warnings of type (<class 'statsmodels.tools.sm_exceptions.HessianInversionWarning'>,) were emitted.
+# > raise ValueError("Cannot use capturing groups in re.Scanner")
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4d17873d3e607d398b85126cd4ed7aad89e4e9d89fc744cdab1af3189a996c2a
+  sha256: 5d257fe58d0772bc46a557880ca78e2a8e07fec7bfd9d11074aef8e33e1aecbc
 
 build:
-  skip: true  # [py<39]
+  skip: true  # [py<310]
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
@@ -21,29 +30,23 @@ requirements:
   host:
     - python
     - pip
-    - setuptools >=69.0.2
-    - cython >=3.0.10,<4
+    - cython >=3.0.13,<4
     - numpy >=2.0.0,<3
     - scipy >=1.13,<2
     - setuptools_scm >=8.0,<9
     - toml
+    - meson-python
+    - setuptools-scm >=9.2.0,<10
   run:
     - python
-    - numpy >=1.22.3,<3
+    - numpy >=1.23.5,<3
     - scipy >=1.8,!=1.9.2
     - pandas >=1.4,!=2.1.0
     - patsy >=0.5.6
     - packaging >=21.3
-
-# E fixture 'reset_randomstate' not found
-{% set deselect_tests = "--deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLM::test_zero_collinear" %}
-{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLMPoissonOffset::test_zero_collinear" %}
-# E Failed: DID NOT WARN. No warnings of type (<class 'statsmodels.tools.sm_exceptions.HessianInversionWarning'>,) were emitted.
-{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output_false" %}
-{% set deselect_tests = deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output" %}
-# > raise ValueError("Cannot use capturing groups in re.Scanner")
-{% set ignore_tests = " --ignore=statsmodels/base/tests/test_generic_methods.py" %}
-{% set ignore_tests = ignore_tests + " --ignore=statsmodels/base/tests/test_shrink_pickle.py" %}
+    - formulaic >=1.1.0
+  run_constrained:
+    - polars >=1.0.0
 
 test:
   source_files:
@@ -73,6 +76,16 @@ about:
     statistics are available for different types of data and each estimator.
     Researchers across fields may find that statsmodels fully meets their
     needs for statistical computing and data analysis in Python.
+
+
+
+
+
+
+
+
+
+
 
 
 
