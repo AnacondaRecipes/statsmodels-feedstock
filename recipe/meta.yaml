@@ -1,17 +1,8 @@
 {% set name = "statsmodels" %}
 {% set version = "0.15.0" %}
-{% set deselect_tests = "--deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLM::test_zero_collinear" %}
-{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLMPoissonOffset::test_zero_collinear"' %}
-{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output_false"' %}
-{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output"' %}
-{% set ignore_tests = " --ignore=statsmodels/base/tests/test_generic_methods.py" %}
-{% set ignore_tests = ignore_tests + " --ignore=statsmodels/base/tests/test_shrink_pickle.py" %}
 
-# E fixture 'reset_randomstate' not found
-# E Failed: DID NOT WARN. No warnings of type (<class 'statsmodels.tools.sm_exceptions.HessianInversionWarning'>,) were emitted.
-# > raise ValueError("Cannot use capturing groups in re.Scanner")
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -33,10 +24,9 @@ requirements:
     - cython >=3.0.13,<4
     - numpy >=2.0.0,<3
     - scipy >=1.13,<2
-    - setuptools_scm >=8.0,<9
-    - toml
-    - meson-python
-    - setuptools-scm >=9.2.0,<10
+    - setuptools_scm >=9.2.0,<10
+    - toml >=0.10.2
+    - meson-python >=0.20.0
   run:
     - python
     - numpy >=1.23.5,<3
@@ -48,6 +38,17 @@ requirements:
   run_constrained:
     - polars >=1.0.0
 
+# E fixture 'reset_randomstate' not found
+# E Failed: DID NOT WARN. No warnings of type (<class 'statsmodels.tools.sm_exceptions.HessianInversionWarning'>,) were emitted.
+# > raise ValueError("Cannot use capturing groups in re.Scanner")
+
+{% set deselect_tests = "--deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLM::test_zero_collinear" %}
+{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_generic_methods.py::TestGenericGLMPoissonOffset::test_zero_collinear"' %}
+{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output_false"' %}
+{% set deselect_tests = 'deselect_tests + " --deselect=statsmodels/base/tests/test_optimize.py::test_full_output"' %}
+{% set ignore_tests = " --ignore=statsmodels/base/tests/test_generic_methods.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=statsmodels/base/tests/test_shrink_pickle.py" %}
+
 test:
   source_files:
     - statsmodels/base/tests
@@ -55,7 +56,7 @@ test:
     - statsmodels
   requires:
     - pip
-    - pytest >=7.3.0,<8
+    - pytest >=8.4.1,<10
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
@@ -77,20 +78,10 @@ about:
     Researchers across fields may find that statsmodels fully meets their
     needs for statistical computing and data analysis in Python.
 
-
-
-
-
-
-
-
-
-
-
-
-
 extra:
   recipe-maintainers:
     - tomaugspurger
     - croth1
     - ocefpaf
+  skip-lints:
+    - host_section_needs_exact_pinnings
