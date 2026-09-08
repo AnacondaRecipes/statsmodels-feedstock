@@ -28,7 +28,7 @@ requirements:
     - toml >=0.10.2
     - meson-python
     # meson-python require ninja-base >=1.8.2 in host section
-    # https://github.com/AnacondaRecipes/meson-python-feedstock/blob/4f6666a76460307daccaacf896184ed763ba0919/recipe/meta.yaml#L31
+    # https://github.com/statsmodels/statsmodels/blob/v0.15.0/docs/source/release/version0.15.0.rst?plain=1#L146-L148
     - ninja-base >=1.8.2
   run:
     - python
@@ -38,7 +38,6 @@ requirements:
     - patsy >=0.5.6
     - packaging >=21.3
     - formulaic >=1.1.0
-    - ninja-base >=1.8.2
   run_constrained:
     - polars >=1.0.0
 
